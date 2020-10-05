@@ -1,2 +1,2 @@
 # potter
-Potter is a PrOject Time TrackER that automatically detects when you are AFK
+Potter is a **P**r**O**ject **T**ime **T**rack**ER** that automatically detects when you are AFK.
