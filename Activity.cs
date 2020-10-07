@@ -20,7 +20,6 @@ namespace potter
             InitializeComponent();
             UpdateButtonTexts();
             FillCombobox(previousActivity);
-            Text = DateTime.Now.ToString();
         }
 
         private void FillCombobox(string currentActivity)
@@ -68,7 +67,9 @@ namespace potter
         {
             if (string.IsNullOrWhiteSpace(comboBoxActivity.Text))
             {
+                TopMost = false;
                 MessageBox.Show("Please enter your current activity.", "Time Tracker", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                TopMost = true;
                 e.Cancel = true;
             }
             else
@@ -79,7 +80,16 @@ namespace potter
                 {
                     var updatedList = Configuration.ActivityList;
                     updatedList.Add(comboBoxActivity.Text.Trim());
-                    Configuration.ActivityList = updatedList;
+                    try
+                    {
+                        Configuration.ActivityList = updatedList;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        TopMost = false;
+                        Configuration.ShowSaveError(ex);
+                        TopMost = true;
+                    }
                 }
             }
         }

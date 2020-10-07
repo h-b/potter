@@ -35,8 +35,14 @@ namespace potter
             config.AppSettings.Settings.Add(textBoxDefaultTimeInverval.Name, textBoxDefaultTimeInverval.Text);
             config.AppSettings.Settings.Add(textBoxOptionalTimeInterval.Name, (60*Int32.Parse(textBoxOptionalTimeInterval.Text)).ToString());
             config.AppSettings.Settings.Add(textBoxRoundTimes.Name, textBoxRoundTimes.Text);
-            config.Save(ConfigurationSaveMode.Minimal);
-            ConfigurationManager.RefreshSection(config.AppSettings.SectionInformation.Name);
+            try
+            {
+                Save(config);
+            }
+            catch (System.Exception ex)
+            {
+                ShowSaveError(ex);
+            }
             Close();
         }
 
@@ -111,9 +117,19 @@ namespace potter
                 {
                     config.AppSettings.Settings.Add(ActivityListName, value.Aggregate((x, y) => x + listDelimiter + y));
                 }
-                config.Save(ConfigurationSaveMode.Minimal);
-                ConfigurationManager.RefreshSection(config.AppSettings.SectionInformation.Name);
+                Save(config);
             }
+        }
+
+        static void Save(System.Configuration.Configuration config)
+        {
+            config.Save(ConfigurationSaveMode.Minimal);
+            ConfigurationManager.RefreshSection(config.AppSettings.SectionInformation.Name);
+        }
+
+        internal static void ShowSaveError(Exception ex)
+        {
+            MessageBox.Show(string.Format("Could not save configuration file: {0}", ex.Message), "Time Tracker", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
