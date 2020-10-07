@@ -21,7 +21,7 @@ namespace potter
             textBoxDefaultTimeInverval.Text = ConfigurationManager.AppSettings[textBoxDefaultTimeInverval.Name] ?? "";
             textBoxOptionalTimeInterval.Text = (Int32.Parse(ConfigurationManager.AppSettings[textBoxOptionalTimeInterval.Name])/60).ToString() ?? "";
             textBoxRoundTimes.Text = ConfigurationManager.AppSettings[textBoxRoundTimes.Name] ?? "";
-            textBoxInfo.Text = textBoxInfo.Text.Replace("{timeout}", ScreenSaverTimeout.ToString());
+            textBoxInfo.Text = textBoxInfo.Text.Replace("{timeout}", (ScreenSaverTimeout/60).ToString());
         }
 
         private void ButtonOK_Click(object sender, EventArgs e)

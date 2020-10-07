@@ -102,9 +102,11 @@ namespace potter
         private static void InitializeTrayIcon()
         {
             contextMenu.MenuItems.Add("Show potter time tracker");
+            contextMenu.MenuItems.Add("Configure potter time tracker");
             contextMenu.MenuItems.Add("Exit");
             contextMenu.MenuItems[0].Click += ShowApplication;
-            contextMenu.MenuItems[1].Click += ExitApplication;
+            contextMenu.MenuItems[1].Click += ConfigureApplication;
+            contextMenu.MenuItems[2].Click += ExitApplication;
 
             notifyIcon = new NotifyIcon();
             notifyIcon.Icon = new Configuration().Icon;
@@ -134,6 +136,11 @@ namespace potter
         private static void ShowApplication(object sender, EventArgs e)
         {
             InitiateToQueryUserActivity();
+        }
+
+        private static void ConfigureApplication(object sender, EventArgs e)
+        {
+            new Configuration().ShowDialog();
         }
 
         private static void ExitApplication(object sender, EventArgs e)
