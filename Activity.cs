@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,9 +15,11 @@ namespace potter
     public partial class Activity : Form
     {
         private static string previousActivity = "";
+        bool showConfiguration;
 
-        public Activity()
+        public Activity(bool showConfiguration)
         {
+            this.showConfiguration = showConfiguration;
             InitializeComponent();
             UpdateButtonTexts();
             FillCombobox(previousActivity);
@@ -91,6 +94,20 @@ namespace potter
                         TopMost = true;
                     }
                 }
+            }
+        }
+
+        private void Activity_Load(object sender, EventArgs e)
+        {
+            if (showConfiguration)
+            {
+                new Task(() =>
+                {
+                    Invoke(new Action(() =>
+                    {
+                        buttonConfiguration.PerformClick();
+                    }));
+                }).Start();
             }
         }
     }

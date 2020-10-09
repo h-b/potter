@@ -8,12 +8,12 @@ using System.Windows.Forms;
 
 namespace potter
 {
-    class Timesheet
+    class Timesheet : IDisposable
     {
         private string previousDescription = null;
         private DateTime previousStartTime = DateTime.MinValue;
 
-        ~Timesheet()
+        void IDisposable.Dispose()
         {
             DateTime now = DateTime.Now;
             Update(previousStartTime, now, previousDescription);
@@ -38,8 +38,11 @@ namespace potter
         {
             string cmd = Configuration.ExecuteCommand;
 
-            cmd = cmd.Replace("$FROM", RoundToNearest(startTime, Configuration.RoundTimes).ToShortTimeString());
-            cmd = cmd.Replace("$TO", RoundToNearest(endTime, Configuration.RoundTimes).ToShortTimeString());
+            DateTime roundedStartTime = RoundToNearest(startTime, Configuration.RoundTimes);
+            DateTime roundedEndTime = RoundToNearest(endTime, Configuration.RoundTimes);
+
+            cmd = cmd.Replace("$FROM", string.Format("{0} {1}", roundedStartTime.ToShortDateString(), roundedStartTime.ToShortTimeString()));
+            cmd = cmd.Replace("$TO", string.Format("{0} {1}", roundedEndTime.ToShortDateString(), roundedEndTime.ToShortTimeString()));
             cmd = cmd.Replace("$PROJECT", project);
 
             ProcessStartInfo psi = new ProcessStartInfo();

@@ -119,6 +119,7 @@
             this.Text = "Time Tracker";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Activity_FormClosing);
+            this.Load += new System.EventHandler(this.Activity_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

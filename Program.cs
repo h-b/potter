@@ -10,142 +10,54 @@ namespace potter
 {
     static class Program
     {
+        static Timesheet timesheet;
         static NotifyIcon notifyIcon;
         static ContextMenu contextMenu = new ContextMenu();
-        static bool wasScreenSaverRunning = false;
-        static bool wasWorkstationLocked = false;
-        static System.Windows.Forms.Timer watchdog = new System.Windows.Forms.Timer();
-        static System.Windows.Forms.Timer queryUserActivity = new System.Windows.Forms.Timer();
-        static bool handlingUserActivity = false;
-        static bool handlingWatchdog = false;
-        static Timesheet timesheet = new Timesheet();
+        static WatchdogHandler watchdogHandler;
+        static ActivityHandler activityHandler;
 
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            InitializeTrayIcon();
-            InitializeTimers();
-            Application.Run();
-            notifyIcon.Dispose();
+            using (notifyIcon = InitializeTrayIcon())
+            using (timesheet = new Timesheet())
+            {
+                activityHandler = new ActivityHandler(timesheet);
+                watchdogHandler = new WatchdogHandler(timesheet, activityHandler.InitiateToQueryUserActivity);
+                Application.Run();
+            }
         }
 
-        private static void QueryUserActivity(object sender, EventArgs e)
-        {
-            if (handlingUserActivity)
-            {
-                return;
-            }
-            handlingUserActivity = true;
-
-            queryUserActivity.Stop();
-            Activity activity = new Activity();
-            DialogResult dialogResult = activity.ShowDialog();
-            DateTime toTime = DateTime.Now;
-
-            timesheet.AddActivity(DateTime.Now, activity.Current);
-
-            queryUserActivity.Interval = 60 * 1000 * (dialogResult == DialogResult.OK ? Configuration.DefaultTimeInterval : Configuration.OptionalTimeInterval);
-            handlingUserActivity = false;
-            queryUserActivity.Start();
-        }
-
-        private static void Watchdog(object sender, EventArgs e)
-        {
-            if (handlingWatchdog)
-            {
-                return;
-            }
-            handlingWatchdog = true;
-
-            watchdog.Stop();
-            bool isScreenSaverRunning = WindowsSpecific.IsScreensaverRunning();
-            bool isWorkstationLocked = WindowsSpecific.IsWorkstationLocked();
-
-            if (isScreenSaverRunning != wasScreenSaverRunning)
-            {
-                if (isScreenSaverRunning)
-                {
-                    timesheet.AddActivity(
-                        DateTime.Now - TimeSpan.FromSeconds(WindowsSpecific.ScreenSaverTimeout),
-                        "Inactive (screen saver plus preceding inactive time)");
-                }
-                else
-                {
-                    InitiateToQueryUserActivity();
-                }
-
-                wasScreenSaverRunning = isScreenSaverRunning;
-            }
-
-            if (isWorkstationLocked != wasWorkstationLocked)
-            {
-                if (isWorkstationLocked)
-                {
-                    if (!wasScreenSaverRunning)
-                    {
-                        timesheet.AddActivity(DateTime.Now, "Inactive (locked screen)");
-                    }
-                }
-                else
-                {
-                    InitiateToQueryUserActivity();
-                }
-
-                wasWorkstationLocked = isWorkstationLocked;
-            }
-            handlingWatchdog = false;
-            watchdog.Start();
-        }
-
-        private static void InitializeTrayIcon()
+        private static NotifyIcon InitializeTrayIcon()
         {
             contextMenu.MenuItems.Add("Show potter time tracker");
             contextMenu.MenuItems.Add("Configure potter time tracker");
             contextMenu.MenuItems.Add("Exit");
-            contextMenu.MenuItems[0].Click += ShowApplication;
-            contextMenu.MenuItems[1].Click += ConfigureApplication;
-            contextMenu.MenuItems[2].Click += ExitApplication;
+            contextMenu.MenuItems[0].Click += new EventHandler(delegate (object sender, EventArgs e)
+            {
+                activityHandler.InitiateToQueryUserActivity(false);
+            });
+            contextMenu.MenuItems[1].Click += new EventHandler(delegate (object sender, EventArgs e)
+            {
+                activityHandler.InitiateToQueryUserActivity(true);
+            });
+            contextMenu.MenuItems[2].Click += new EventHandler(delegate (object sender, EventArgs e)
+            {
+                Application.Exit();
+            });
 
-            notifyIcon = new NotifyIcon();
+            NotifyIcon notifyIcon = new NotifyIcon();
             notifyIcon.Icon = new Configuration().Icon;
             notifyIcon.Visible = true;
             notifyIcon.Text = "Left-click to show time tracker, right-click to show menu";
             notifyIcon.ContextMenu = contextMenu;
-            notifyIcon.MouseClick += ShowApplication;
-        }
-
-        private static void InitializeTimers()
-        {
-            watchdog.Tick += Watchdog;
-            watchdog.Interval = 100;
-            watchdog.Start();
-
-            queryUserActivity.Tick += QueryUserActivity;
-            InitiateToQueryUserActivity();
-        }
-
-        private static void InitiateToQueryUserActivity()
-        {
-            queryUserActivity.Stop();
-            queryUserActivity.Interval = 1;
-            queryUserActivity.Start();
-        }
-
-        private static void ShowApplication(object sender, EventArgs e)
-        {
-            InitiateToQueryUserActivity();
-        }
-
-        private static void ConfigureApplication(object sender, EventArgs e)
-        {
-            new Configuration().ShowDialog();
-        }
-
-        private static void ExitApplication(object sender, EventArgs e)
-        {
-            Application.Exit();
+            notifyIcon.MouseClick += new MouseEventHandler(delegate (object sender, MouseEventArgs e)
+            {
+                activityHandler.InitiateToQueryUserActivity(false);
+            });
+            return notifyIcon;
         }
     }
 }
