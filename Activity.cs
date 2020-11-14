@@ -79,20 +79,23 @@ namespace potter
             {
                 previousActivity = comboBoxActivity.Text.Trim();
 
-                if (!Configuration.ActivityList.Contains(previousActivity))
+                var updatedList = Configuration.ActivityList;
+
+                if (updatedList.Contains(previousActivity))
                 {
-                    var updatedList = Configuration.ActivityList;
-                    updatedList.Add(comboBoxActivity.Text.Trim());
-                    try
-                    {
-                        Configuration.ActivityList = updatedList;
-                    }
-                    catch (System.Exception ex)
-                    {
-                        TopMost = false;
-                        Configuration.ShowSaveError(ex);
-                        TopMost = true;
-                    }
+                    updatedList.Remove(previousActivity);
+                }
+                
+                updatedList.Insert(0, comboBoxActivity.Text.Trim());
+                try
+                {
+                    Configuration.ActivityList = updatedList;
+                }
+                catch (System.Exception ex)
+                {
+                    TopMost = false;
+                    Configuration.ShowSaveError(ex);
+                    TopMost = true;
                 }
             }
         }
