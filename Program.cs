@@ -33,17 +33,23 @@ namespace potter
         private static NotifyIcon InitializeTrayIcon()
         {
             contextMenu.MenuItems.Add("Show potter time tracker");
-            contextMenu.MenuItems.Add("Configure potter time tracker");
+            contextMenu.MenuItems.Add("Settings...");
+            contextMenu.MenuItems.Add("About...");
             contextMenu.MenuItems.Add("Exit");
             contextMenu.MenuItems[0].Click += new EventHandler(delegate (object sender, EventArgs e)
             {
-                activityHandler.InitiateToQueryUserActivity(false);
+                activityHandler.InitiateToQueryUserActivity(false, true);
             });
             contextMenu.MenuItems[1].Click += new EventHandler(delegate (object sender, EventArgs e)
             {
-                activityHandler.InitiateToQueryUserActivity(true);
+                activityHandler.InitiateToQueryUserActivity(true, false);
             });
             contextMenu.MenuItems[2].Click += new EventHandler(delegate (object sender, EventArgs e)
+            {
+                AboutBox aboutBox = new AboutBox();
+                aboutBox.ShowDialog();
+            });
+            contextMenu.MenuItems[3].Click += new EventHandler(delegate (object sender, EventArgs e)
             {
                 Application.Exit();
             });
@@ -55,7 +61,10 @@ namespace potter
             notifyIcon.ContextMenu = contextMenu;
             notifyIcon.MouseClick += new MouseEventHandler(delegate (object sender, MouseEventArgs e)
             {
-                activityHandler.InitiateToQueryUserActivity(false);
+                if (e.Button == MouseButtons.Left)
+                {
+                    activityHandler.InitiateToQueryUserActivity(false, true);
+                }
             });
             return notifyIcon;
         }

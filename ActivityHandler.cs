@@ -13,19 +13,21 @@ namespace potter
         System.Timers.Timer queryUserActivity = new System.Timers.Timer();
         object handlingUserActivity = new object();
         bool showConfiguration = false;
+        bool startNow = false;
         Timesheet timesheet;
-        public delegate void DelegateInitiateToQueryUserActivity(bool showConfiguration);
+        public delegate void DelegateInitiateToQueryUserActivity(bool showConfiguration, bool startNow);
 
         public ActivityHandler(Timesheet timesheet)
         {
             this.timesheet = timesheet;
             queryUserActivity.Elapsed += QueryUserActivity;
-            InitiateToQueryUserActivity(false);
+            InitiateToQueryUserActivity(false, true);
         }
 
-        internal void InitiateToQueryUserActivity(bool showConfiguration)
+        internal void InitiateToQueryUserActivity(bool showConfiguration, bool startNow)
         {
             this.showConfiguration = showConfiguration;
+            this.startNow = startNow;
             queryUserActivity.Interval = 1;
             queryUserActivity.Start();
         }
@@ -39,10 +41,17 @@ namespace potter
                     queryUserActivity.Stop();
                     Activity activity = new Activity(showConfiguration);
                     showConfiguration = false;
-                    DialogResult dialogResult = activity.ShowDialog();
-                    DateTime toTime = DateTime.Now;
+                    DateTime startTime = DateTime.Now;
 
-                    timesheet.AddActivity(DateTime.Now, activity.Current);
+                    DialogResult dialogResult = activity.ShowDialog();
+
+                    if (!startNow)
+                    {
+                        // the activity does not start when the dialog opens, but only after the user closes the dialog
+                        startTime = DateTime.Now;
+                    }
+
+                    timesheet.AddActivity(startTime, activity.Current);
 
                     queryUserActivity.Interval = 60 * 1000 * (dialogResult == DialogResult.OK ? Configuration.DefaultTimeInterval : Configuration.OptionalTimeInterval);
                     queryUserActivity.Start();

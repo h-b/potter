@@ -32,6 +32,21 @@ namespace potter
             comboBoxActivity.Text = currentActivity;
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.A))
+            {
+                comboBoxActivity.DroppedDown = true;
+                return true;
+            }
+            else if (keyData == (Keys.Control | Keys.S))
+            {
+                ClickConfiguationButton();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void buttonRemoveActivity_Click(object sender, EventArgs e)
         {
             if (Configuration.ActivityList.Contains(comboBoxActivity.Text.Trim()))
@@ -68,50 +83,58 @@ namespace potter
 
         private void Activity_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(comboBoxActivity.Text))
+            Invoke(new Action(() =>
             {
-                TopMost = false;
-                MessageBox.Show("Please enter your current activity.", "Time Tracker", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                TopMost = true;
-                e.Cancel = true;
-            }
-            else
-            {
-                previousActivity = comboBoxActivity.Text.Trim();
-
-                var updatedList = Configuration.ActivityList;
-
-                if (updatedList.Contains(previousActivity))
-                {
-                    updatedList.Remove(previousActivity);
-                }
-                
-                updatedList.Insert(0, comboBoxActivity.Text.Trim());
-                try
-                {
-                    Configuration.ActivityList = updatedList;
-                }
-                catch (System.Exception ex)
+                if (string.IsNullOrWhiteSpace(comboBoxActivity.Text))
                 {
                     TopMost = false;
-                    Configuration.ShowSaveError(ex);
+                    MessageBox.Show("Please enter your current activity.", "Time Tracker", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     TopMost = true;
+                    e.Cancel = true;
                 }
-            }
+                else
+                {
+                    previousActivity = comboBoxActivity.Text.Trim();
+
+                    var updatedList = Configuration.ActivityList;
+
+                    if (updatedList.Contains(previousActivity))
+                    {
+                        updatedList.Remove(previousActivity);
+                    }
+
+                    updatedList.Insert(0, comboBoxActivity.Text.Trim());
+                    try
+                    {
+                        Configuration.ActivityList = updatedList;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        TopMost = false;
+                        Configuration.ShowSaveError(ex);
+                        TopMost = true;
+                    }
+                }
+            }));
         }
 
         private void Activity_Load(object sender, EventArgs e)
         {
             if (showConfiguration)
             {
-                new Task(() =>
-                {
-                    Invoke(new Action(() =>
-                    {
-                        buttonConfiguration.PerformClick();
-                    }));
-                }).Start();
+                ClickConfiguationButton();
             }
+        }
+
+        private void ClickConfiguationButton()
+        {
+            new Task(() =>
+            {
+                Invoke(new Action(() =>
+                {
+                    buttonConfiguration.PerformClick();
+                }));
+            }).Start();
         }
     }
 }

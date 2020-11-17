@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
 [assembly: AssemblyTitle("potter")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Potter is a PrOject Time TrackER that automatically detects when you are AFK. It displays a dialog every n minutes in which you can enter (or keep) the current work description. In addition the current work description can be changed via a tray icon. The time segments are sent to a freely configurable tool (by default, they are attached to a text file).")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("potter")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
+[assembly: AssemblyCompany("Zipproth GmbH")]
+[assembly: AssemblyProduct("Potter PrOject Time TrackER")]
+[assembly: AssemblyCopyright("Copyright © Stefan Zipproth 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

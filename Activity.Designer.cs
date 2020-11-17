@@ -80,9 +80,9 @@
             // 
             this.buttonConfiguration.Location = new System.Drawing.Point(18, 116);
             this.buttonConfiguration.Name = "buttonConfiguration";
-            this.buttonConfiguration.Size = new System.Drawing.Size(288, 48);
+            this.buttonConfiguration.Size = new System.Drawing.Size(288, 52);
             this.buttonConfiguration.TabIndex = 2;
-            this.buttonConfiguration.Text = "Configuration...";
+            this.buttonConfiguration.Text = "Settings...";
             this.buttonConfiguration.UseVisualStyleBackColor = true;
             this.buttonConfiguration.Click += new System.EventHandler(this.ButtonConfiguration_Click);
             // 
@@ -113,6 +113,7 @@
             this.Controls.Add(this.comboBoxActivity);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "Activity";
             this.Opacity = 0.9D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -45,7 +45,7 @@ namespace potter
                         }
                         else
                         {
-                            InitiateToQueryUserActivity(false);
+                            InitiateToQueryUserActivity(false, false);
                         }
 
                         wasScreenSaverRunning = isScreenSaverRunning;
@@ -62,7 +62,7 @@ namespace potter
                         }
                         else
                         {
-                            InitiateToQueryUserActivity(false);
+                            InitiateToQueryUserActivity(false, false);
                         }
 
                         wasWorkstationLocked = isWorkstationLocked;
