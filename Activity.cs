@@ -14,29 +14,43 @@ namespace potter
 {
     public partial class Activity : Form
     {
-        private static string previousActivity = "";
         bool showConfiguration;
 
-        public Activity(bool showConfiguration)
+        public Activity(string previousActivity, string previousCategory, bool showConfiguration)
         {
             this.showConfiguration = showConfiguration;
             InitializeComponent();
             UpdateButtonTexts();
-            FillCombobox(previousActivity);
+            FillComboboxActivity(previousActivity);
+            FillComboboxCategory(previousCategory);
         }
 
-        private void FillCombobox(string currentActivity)
+        private void FillComboboxActivity(string currentActivity)
         {
             comboBoxActivity.Items.Clear();
             comboBoxActivity.Items.AddRange(Configuration.ActivityList.ToArray());
             comboBoxActivity.Text = currentActivity;
         }
 
+        private void FillComboboxCategory(string currentCategory)
+        {
+            comboBoxCategory.Items.Clear();
+            comboBoxCategory.Items.AddRange(Configuration.CategoryList.ToArray());
+            comboBoxCategory.Text = currentCategory;
+        }
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == (Keys.Control | Keys.A))
             {
+                comboBoxActivity.Focus();
                 comboBoxActivity.DroppedDown = true;
+                return true;
+            }
+            else if (keyData == (Keys.Control | Keys.C))
+            {
+                comboBoxCategory.Focus();
+                comboBoxCategory.DroppedDown = true;
                 return true;
             }
             else if (keyData == (Keys.Control | Keys.S))
@@ -54,7 +68,18 @@ namespace potter
                 var updatedList = Configuration.ActivityList;
                 updatedList.Remove(comboBoxActivity.Text.Trim());
                 Configuration.ActivityList = updatedList;
-                FillCombobox("");
+                FillComboboxActivity(Configuration.CurrentActivity);
+            }
+        }
+
+        private void buttonRemoveCategory_Click(object sender, EventArgs e)
+        {
+            if (Configuration.CategoryList.Contains(comboBoxCategory.Text.Trim()))
+            {
+                var updatedList = Configuration.CategoryList;
+                updatedList.Remove(comboBoxCategory.Text.Trim());
+                Configuration.CategoryList = updatedList;
+                FillComboboxCategory(Configuration.CurrentCategory);
             }
         }
 
@@ -81,6 +106,14 @@ namespace potter
             }
         }
 
+        internal string Category
+        {
+            get
+            {
+                return comboBoxCategory.Text.Trim();
+            }
+        }
+
         private void Activity_FormClosing(object sender, FormClosingEventArgs e)
         {
             Invoke(new Action(() =>
@@ -91,29 +124,6 @@ namespace potter
                     MessageBox.Show("Please enter your current activity.", "Time Tracker", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     TopMost = true;
                     e.Cancel = true;
-                }
-                else
-                {
-                    previousActivity = comboBoxActivity.Text.Trim();
-
-                    var updatedList = Configuration.ActivityList;
-
-                    if (updatedList.Contains(previousActivity))
-                    {
-                        updatedList.Remove(previousActivity);
-                    }
-
-                    updatedList.Insert(0, comboBoxActivity.Text.Trim());
-                    try
-                    {
-                        Configuration.ActivityList = updatedList;
-                    }
-                    catch (System.Exception ex)
-                    {
-                        TopMost = false;
-                        Configuration.ShowSaveError(ex);
-                        TopMost = true;
-                    }
                 }
             }));
         }

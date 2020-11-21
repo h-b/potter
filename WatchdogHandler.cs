@@ -27,6 +27,8 @@ namespace potter
 
         private void Watchdog(object sender, EventArgs e)
         {
+            const string inactiveMsg = "Inactive (screen saver plus preceding inactive time or locked screen)";
+
             if (Monitor.TryEnter(handlingWatchdog))
             {
                 try
@@ -41,7 +43,7 @@ namespace potter
                         {
                             timesheet.AddActivity(
                                 DateTime.Now - TimeSpan.FromSeconds(WindowsSpecific.ScreenSaverTimeout),
-                                "Inactive (screen saver plus preceding inactive time)");
+                                inactiveMsg, Timesheet.SystemCategory);
                         }
                         else
                         {
@@ -57,7 +59,7 @@ namespace potter
                         {
                             if (!wasScreenSaverRunning)
                             {
-                                timesheet.AddActivity(DateTime.Now, "Inactive (locked screen)");
+                                timesheet.AddActivity(DateTime.Now, inactiveMsg, Timesheet.SystemCategory);
                             }
                         }
                         else
@@ -67,6 +69,13 @@ namespace potter
 
                         wasWorkstationLocked = isWorkstationLocked;
                     }
+
+                    if (Program.s_event.WaitOne(1))
+                    {
+                        Logger.Append("Received message from other potter instance to open the dialog.");
+                        InitiateToQueryUserActivity(false, true);
+                    }
+
                     watchdog.Start();
                 }
                 finally

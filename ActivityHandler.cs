@@ -39,11 +39,21 @@ namespace potter
                 try
                 {
                     queryUserActivity.Stop();
-                    Activity activity = new Activity(showConfiguration);
+                    Activity activity = new Activity(Configuration.CurrentActivity, Configuration.CurrentCategory, showConfiguration);
                     showConfiguration = false;
                     DateTime startTime = DateTime.Now;
 
                     DialogResult dialogResult = activity.ShowDialog();
+
+                    try
+                    {
+                        Configuration.CurrentActivity = activity.Current;
+                        Configuration.CurrentCategory = activity.Category;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Configuration.ShowSaveError(ex);
+                    }
 
                     if (!startNow)
                     {
@@ -51,7 +61,7 @@ namespace potter
                         startTime = DateTime.Now;
                     }
 
-                    timesheet.AddActivity(startTime, activity.Current);
+                    timesheet.AddActivity(startTime, activity.Current, activity.Category);
 
                     queryUserActivity.Interval = 60 * 1000 * (dialogResult == DialogResult.OK ? Configuration.DefaultTimeInterval : Configuration.OptionalTimeInterval);
                     queryUserActivity.Start();

@@ -43,6 +43,7 @@
             this.textBoxRoundTimes = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.checkBoxStartOnLogin = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.textBoxDefaultTimeInverval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textBoxOptionalTimeInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textBoxRoundTimes)).BeginInit();
@@ -52,16 +53,18 @@
             // 
             this.comboBoxExecuteCommand.FormattingEnabled = true;
             this.comboBoxExecuteCommand.Items.AddRange(new object[] {
-            "cmd /C echo $FROM - $TO: $PROJECT >>timesheet.txt"});
-            this.comboBoxExecuteCommand.Location = new System.Drawing.Point(18, 44);
+            "cmd /C echo ^| $FROM ^| $TO ^| $CATEGORY ^| $ACTIVITY ^| >>timesheet.md"});
+            this.comboBoxExecuteCommand.Location = new System.Drawing.Point(18, 45);
+            this.comboBoxExecuteCommand.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBoxExecuteCommand.Name = "comboBoxExecuteCommand";
-            this.comboBoxExecuteCommand.Size = new System.Drawing.Size(989, 39);
+            this.comboBoxExecuteCommand.Size = new System.Drawing.Size(988, 39);
             this.comboBoxExecuteCommand.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(12, 10);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(688, 32);
             this.label1.TabIndex = 1;
@@ -70,7 +73,8 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 106);
+            this.label2.Location = new System.Drawing.Point(12, 107);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(910, 32);
             this.label2.TabIndex = 2;
@@ -80,6 +84,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(166, 147);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(115, 32);
             this.label3.TabIndex = 4;
@@ -90,7 +95,8 @@
             this.textBoxInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxInfo.Location = new System.Drawing.Point(18, 437);
+            this.textBoxInfo.Location = new System.Drawing.Point(18, 533);
+            this.textBoxInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxInfo.Multiline = true;
             this.textBoxInfo.Name = "textBoxInfo";
             this.textBoxInfo.ReadOnly = true;
@@ -102,9 +108,10 @@
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(843, 643);
+            this.buttonOK.Location = new System.Drawing.Point(844, 738);
+            this.buttonOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(195, 51);
+            this.buttonOK.Size = new System.Drawing.Size(196, 50);
             this.buttonOK.TabIndex = 3;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -113,7 +120,8 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(166, 253);
+            this.label4.Location = new System.Drawing.Point(166, 254);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(86, 32);
             this.label4.TabIndex = 8;
@@ -122,7 +130,8 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 212);
+            this.label5.Location = new System.Drawing.Point(12, 211);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(372, 32);
             this.label5.TabIndex = 7;
@@ -132,9 +141,10 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(642, 643);
+            this.buttonCancel.Location = new System.Drawing.Point(642, 738);
+            this.buttonCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(195, 51);
+            this.buttonCancel.Size = new System.Drawing.Size(196, 50);
             this.buttonCancel.TabIndex = 4;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -143,13 +153,15 @@
             // textBoxDefaultTimeInverval
             // 
             this.textBoxDefaultTimeInverval.Location = new System.Drawing.Point(18, 141);
+            this.textBoxDefaultTimeInverval.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxDefaultTimeInverval.Name = "textBoxDefaultTimeInverval";
             this.textBoxDefaultTimeInverval.Size = new System.Drawing.Size(142, 38);
             this.textBoxDefaultTimeInverval.TabIndex = 1;
             // 
             // textBoxOptionalTimeInterval
             // 
-            this.textBoxOptionalTimeInterval.Location = new System.Drawing.Point(18, 253);
+            this.textBoxOptionalTimeInterval.Location = new System.Drawing.Point(18, 254);
+            this.textBoxOptionalTimeInterval.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxOptionalTimeInterval.Name = "textBoxOptionalTimeInterval";
             this.textBoxOptionalTimeInterval.Size = new System.Drawing.Size(142, 38);
             this.textBoxOptionalTimeInterval.TabIndex = 2;
@@ -157,6 +169,7 @@
             // textBoxRoundTimes
             // 
             this.textBoxRoundTimes.Location = new System.Drawing.Point(18, 355);
+            this.textBoxRoundTimes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxRoundTimes.Name = "textBoxRoundTimes";
             this.textBoxRoundTimes.Size = new System.Drawing.Size(120, 38);
             this.textBoxRoundTimes.TabIndex = 9;
@@ -165,6 +178,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(12, 320);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(213, 32);
             this.label6.TabIndex = 10;
@@ -173,11 +187,23 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(144, 357);
+            this.label7.Location = new System.Drawing.Point(144, 356);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(115, 32);
             this.label7.TabIndex = 11;
             this.label7.Text = "minutes";
+            // 
+            // checkBoxStartOnLogin
+            // 
+            this.checkBoxStartOnLogin.AutoSize = true;
+            this.checkBoxStartOnLogin.Location = new System.Drawing.Point(18, 432);
+            this.checkBoxStartOnLogin.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.checkBoxStartOnLogin.Name = "checkBoxStartOnLogin";
+            this.checkBoxStartOnLogin.Size = new System.Drawing.Size(34, 33);
+            this.checkBoxStartOnLogin.TabIndex = 12;
+            this.checkBoxStartOnLogin.UseVisualStyleBackColor = true;
+            this.checkBoxStartOnLogin.CheckedChanged += new System.EventHandler(this.checkBoxStartOnLogin_CheckedChanged);
             // 
             // Configuration
             // 
@@ -185,8 +211,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(1050, 706);
+            this.ClientSize = new System.Drawing.Size(1050, 800);
             this.ControlBox = false;
+            this.Controls.Add(this.checkBoxStartOnLogin);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textBoxRoundTimes);
@@ -202,9 +229,11 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxExecuteCommand);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Configuration";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Potter configuration";
+            this.Load += new System.EventHandler(this.Configuration_Load);
             ((System.ComponentModel.ISupportInitialize)(this.textBoxDefaultTimeInverval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textBoxOptionalTimeInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textBoxRoundTimes)).EndInit();
@@ -228,6 +257,7 @@
         private System.Windows.Forms.NumericUpDown textBoxRoundTimes;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox checkBoxStartOnLogin;
     }
 }
 

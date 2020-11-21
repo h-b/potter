@@ -10,31 +10,42 @@ namespace potter
 {
     class Timesheet : IDisposable
     {
-        private string previousDescription = null;
+        private string previousActivity = null;
+        private string previousCategory = null;
+        private string previousUserActivity = null;
+        private string previousUserCategory = null;
         private DateTime previousStartTime = DateTime.MinValue;
+        internal static string SystemCategory = "(system)";
 
         void IDisposable.Dispose()
         {
             DateTime now = DateTime.Now;
-            Update(previousStartTime, now, previousDescription);
-            Update(now, now, "Application exit");
+            Update(previousStartTime, now, previousActivity, previousCategory);
+            Update(now, now, "Application exit", "(system)");
         }
 
-        public void AddActivity(DateTime startTime, string description)
+        public void AddActivity(DateTime startTime, string activity, string category)
         {
-            if (description != previousDescription)
+            if (activity != previousActivity || category != previousCategory)
             {
-                if (!string.IsNullOrWhiteSpace(previousDescription) && previousStartTime != DateTime.MinValue)
+                if (!string.IsNullOrWhiteSpace(previousActivity) && previousStartTime != DateTime.MinValue)
                 {
-                    Update(previousStartTime, startTime, previousDescription);
+                    Update(previousStartTime, startTime, previousActivity, string.IsNullOrWhiteSpace(previousCategory) ? "": previousCategory);
                 }
 
                 previousStartTime = startTime;
-                previousDescription = description;
+                previousActivity = activity;
+                previousCategory = category;
+
+                if (category != SystemCategory)
+                {
+                    previousUserActivity = activity;
+                    previousUserCategory = category;
+                }
             }
         }
 
-        private void Update(DateTime startTime, DateTime endTime, string project)
+        private void Update(DateTime startTime, DateTime endTime, string activity, string category)
         {
             string cmd = Configuration.ExecuteCommand;
 
@@ -43,7 +54,8 @@ namespace potter
 
             cmd = cmd.Replace("$FROM", string.Format("{0} {1}", roundedStartTime.ToShortDateString(), roundedStartTime.ToShortTimeString()));
             cmd = cmd.Replace("$TO", string.Format("{0} {1}", roundedEndTime.ToShortDateString(), roundedEndTime.ToShortTimeString()));
-            cmd = cmd.Replace("$PROJECT", project);
+            cmd = cmd.Replace("$ACTIVITY", activity);
+            cmd = cmd.Replace("$CATEGORY", category);
 
             ProcessStartInfo psi = new ProcessStartInfo();
             psi.FileName = cmd.Split(" ".ToCharArray())[0];
