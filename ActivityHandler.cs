@@ -55,11 +55,20 @@ namespace potter
                         Configuration.ShowSaveError(ex);
                     }
 
-                    if (!startNow)
+                    string activityDescription;
+
+                    if (startNow)
+                    {
+                        activityDescription = "started when the dialog opened";
+                    }
+                    else
                     {
                         // the activity does not start when the dialog opens, but only after the user closes the dialog
                         startTime = DateTime.Now;
+                        activityDescription = "started after the user closed the dialog";
                     }
+
+                    Logger.Append("Adding activity that " + activityDescription + ", i. e. " + startTime.ToString(Timesheet.dateFormat) + " " + startTime.ToString(Timesheet.timeFormat) + ": " + activity.Category + " | " + activity.Current);
 
                     timesheet.AddActivity(startTime, activity.Current, activity.Category);
 

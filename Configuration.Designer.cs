@@ -53,7 +53,8 @@
             // 
             this.comboBoxExecuteCommand.FormattingEnabled = true;
             this.comboBoxExecuteCommand.Items.AddRange(new object[] {
-            "cmd /C echo ^| $FROM ^| $TO ^| $CATEGORY ^| $ACTIVITY ^| >>timesheet.md"});
+            "cmd /C echo ^| $FROM_DATE ^| $FROM_TIME ^| $TO_DATE ^| $TO_TIME ^| $CATEGORY ^| $" +
+                "ACTIVITY ^| >>timesheet.md"});
             this.comboBoxExecuteCommand.Location = new System.Drawing.Point(18, 45);
             this.comboBoxExecuteCommand.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBoxExecuteCommand.Name = "comboBoxExecuteCommand";
@@ -95,12 +96,12 @@
             this.textBoxInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxInfo.Location = new System.Drawing.Point(18, 533);
+            this.textBoxInfo.Location = new System.Drawing.Point(18, 501);
             this.textBoxInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxInfo.Multiline = true;
             this.textBoxInfo.Name = "textBoxInfo";
             this.textBoxInfo.ReadOnly = true;
-            this.textBoxInfo.Size = new System.Drawing.Size(1020, 200);
+            this.textBoxInfo.Size = new System.Drawing.Size(1020, 244);
             this.textBoxInfo.TabIndex = 5;
             this.textBoxInfo.TabStop = false;
             this.textBoxInfo.Text = resources.GetString("textBoxInfo.Text");
@@ -108,7 +109,7 @@
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(844, 738);
+            this.buttonOK.Location = new System.Drawing.Point(844, 750);
             this.buttonOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(196, 50);
@@ -141,7 +142,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(642, 738);
+            this.buttonCancel.Location = new System.Drawing.Point(642, 750);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(196, 50);
@@ -211,7 +212,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(1050, 800);
+            this.ClientSize = new System.Drawing.Size(1050, 812);
             this.ControlBox = false;
             this.Controls.Add(this.checkBoxStartOnLogin);
             this.Controls.Add(this.label7);

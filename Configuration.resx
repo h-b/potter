@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="textBoxInfo.Text" xml:space="preserve">
-    <value>Please adapt the command to be executed to your needs. The placeholders $FROM, $TO, $ACTIVITY and $CATEGORY will be replaced automatically.
+    <value>Please adapt the command to be executed to your needs. The placeholders $FROM_DATE, $TO_DATE, $FROM_TIME, $TO_TIME, $ACTIVITY and $CATEGORY will be replaced automatically.
 
 Locking the screen will stop the current activity. Activating the screen saver will stop it {timeout} minutes earlier, i. e. as soon as the system detected that you are inactive.</value>
   </data>

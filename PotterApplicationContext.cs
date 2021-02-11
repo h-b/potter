@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,6 @@ namespace potter
     class PotterApplicationContext : ApplicationContext
     {
         private NotifyIcon notifyIcon;
-        private ContextMenuStrip contextMenu;
         private Timesheet timesheet;
         private WatchdogHandler watchdogHandler;
         private ActivityHandler activityHandler;
@@ -20,48 +20,69 @@ namespace potter
             Application.ApplicationExit += new EventHandler(delegate (object sender, EventArgs e)
             {
                 notifyIcon.Visible = false;
+                Logger.Append("PotterApplicationContext.ApplicationExit");
             });
-            notifyIcon = InitializeTrayIcon();
             timesheet = new Timesheet();
             activityHandler = new ActivityHandler(timesheet);
             watchdogHandler = new WatchdogHandler(timesheet, activityHandler.InitiateToQueryUserActivity);
+            InitializeTrayIcon();
+            Logger.Append("Created PotterApplicationContext");
+        }
+
+        ~PotterApplicationContext()
+        {
+            Logger.Append("~PotterApplicationContext");
+        }
+
+        private void InitializeTrayIcon()
+        {
+            notifyIcon = new NotifyIcon();
+            notifyIcon.Icon = new Configuration().Icon;
+            notifyIcon.Visible = true;
+            notifyIcon.Text = "Double-click to show time tracker, right-click to show menu";
+            notifyIcon.ContextMenuStrip = createContextMenu();
+
+            notifyIcon.DoubleClick += new EventHandler(delegate (object sender, EventArgs e)
+            {
+                Logger.Append("TrayIcon.DoubleClick");
+                activityHandler.InitiateToQueryUserActivity(false, true);
+            });
             notifyIcon.Visible = true;
         }
 
-        private NotifyIcon InitializeTrayIcon()
+        private ContextMenuStrip createContextMenu()
         {
-            contextMenu = new ContextMenuStrip();
+            ContextMenuStrip contextMenu = new ContextMenuStrip();
             contextMenu.Items.AddRange(new ToolStripItem[] {
                 new ToolStripMenuItem("Show potter time tracker", null, new EventHandler(delegate (object sender, EventArgs e)
                 {
+                    Logger.Append("TrayIcon.Show");
                     activityHandler.InitiateToQueryUserActivity(false, true);
                 })),
                 new ToolStripMenuItem("Settings...", null, new EventHandler(delegate (object sender, EventArgs e)
                 {
+                    Logger.Append("TrayIcon.Settings");
                     activityHandler.InitiateToQueryUserActivity(true, false);
                 })),
                 new ToolStripMenuItem("About...", null, new EventHandler(delegate (object sender, EventArgs e)
                 {
+                    Logger.Append("TrayIcon.About");
                     AboutBox aboutBox = new AboutBox();
                     aboutBox.ShowDialog();
                 })),
                 new ToolStripMenuItem("Exit", null, new EventHandler(delegate (object sender, EventArgs e)
                 {
+                    Logger.Append("TrayIcon.Exit");
                     Application.Exit();
                 }))
             });
 
-            NotifyIcon notifyIcon = new NotifyIcon();
-            notifyIcon.Icon = new Configuration().Icon;
-            notifyIcon.Visible = true;
-            notifyIcon.Text = "Double-click to show time tracker, right-click to show menu";
-            notifyIcon.ContextMenuStrip = contextMenu;
-            notifyIcon.DoubleClick += new EventHandler(delegate (object sender, EventArgs e)
+            contextMenu.Opened += new EventHandler(delegate (object sender, EventArgs e)
             {
-                activityHandler.InitiateToQueryUserActivity(false, true);
+                notifyIcon.ContextMenuStrip = createContextMenu(); // workaround for randomly freezing context menu after Opened event
             });
 
-            return notifyIcon;
+            return contextMenu;
         }
     }
 }

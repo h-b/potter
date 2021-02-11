@@ -146,5 +146,25 @@ namespace potter
                 }));
             }).Start();
         }
+
+        string forbiddenChars = "`|<>^\"&";
+
+        private void comboBoxActivity_Validating(object sender, CancelEventArgs e)
+        {
+            e.Cancel = comboBoxActivity.Text.IndexOfAny(forbiddenChars.ToCharArray()) != -1;
+            if (e.Cancel)
+            {
+                MessageBox.Show("The following characters must not be used in the activity description: " + forbiddenChars, "Failed validation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void comboBoxCategory_Validating(object sender, CancelEventArgs e)
+        {
+            e.Cancel = comboBoxActivity.Text.IndexOfAny(forbiddenChars.ToCharArray()) != -1;
+            if (e.Cancel)
+            {
+                MessageBox.Show("The following characters must not be used in the category description: " + forbiddenChars, "Failed validation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

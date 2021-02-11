@@ -39,6 +39,8 @@ namespace potter
 
                     if (isScreenSaverRunning != wasScreenSaverRunning)
                     {
+                        Logger.Append(string.Format("Detected changed screensaver status: {0} --> {1}", wasScreenSaverRunning, isScreenSaverRunning));
+
                         if (isScreenSaverRunning)
                         {
                             timesheet.AddActivity(
@@ -47,7 +49,7 @@ namespace potter
                         }
                         else
                         {
-                            InitiateToQueryUserActivity(false, false);
+                            InitiateToQueryUserActivity(false, true);
                         }
 
                         wasScreenSaverRunning = isScreenSaverRunning;
@@ -55,6 +57,8 @@ namespace potter
 
                     if (isWorkstationLocked != wasWorkstationLocked)
                     {
+                        Logger.Append(string.Format("Detected changed screenlocked status: {0} --> {1}", wasWorkstationLocked, isWorkstationLocked));
+
                         if (isWorkstationLocked)
                         {
                             if (!wasScreenSaverRunning)
@@ -64,7 +68,7 @@ namespace potter
                         }
                         else
                         {
-                            InitiateToQueryUserActivity(false, false);
+                            InitiateToQueryUserActivity(false, true);
                         }
 
                         wasWorkstationLocked = isWorkstationLocked;

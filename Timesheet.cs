@@ -45,6 +45,9 @@ namespace potter
             }
         }
 
+        internal static string dateFormat = "yyyy-MM-dd";
+        internal static string timeFormat = "HH:mm";
+
         private void Update(DateTime startTime, DateTime endTime, string activity, string category)
         {
             string cmd = Configuration.ExecuteCommand;
@@ -52,8 +55,10 @@ namespace potter
             DateTime roundedStartTime = RoundToNearest(startTime, Configuration.RoundTimes);
             DateTime roundedEndTime = RoundToNearest(endTime, Configuration.RoundTimes);
 
-            cmd = cmd.Replace("$FROM", string.Format("{0} {1}", roundedStartTime.ToShortDateString(), roundedStartTime.ToShortTimeString()));
-            cmd = cmd.Replace("$TO", string.Format("{0} {1}", roundedEndTime.ToShortDateString(), roundedEndTime.ToShortTimeString()));
+            cmd = cmd.Replace("$FROM_DATE", roundedStartTime.ToString(dateFormat));
+            cmd = cmd.Replace("$TO_DATE", roundedEndTime.ToString(dateFormat));
+            cmd = cmd.Replace("$FROM_TIME", roundedStartTime.ToString(timeFormat));
+            cmd = cmd.Replace("$TO_TIME", roundedEndTime.ToString(timeFormat));
             cmd = cmd.Replace("$ACTIVITY", activity);
             cmd = cmd.Replace("$CATEGORY", category);
 

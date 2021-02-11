@@ -89,26 +89,19 @@ namespace potter
             return false;
         }
 
-        // Check if the screensaver is busy running.
         public static bool IsScreensaverRunning()
         {
             const int SPI_GETSCREENSAVERRUNNING = 114;
             bool isRunning = false;
 
-            if (!SystemParametersInfo(SPI_GETSCREENSAVERRUNNING, 0, ref isRunning, 0))
+            if (SystemParametersInfo(SPI_GETSCREENSAVERRUNNING, 0, ref isRunning, 0))
             {
-                // Could not detect screen saver status...
-                return false;
+                return isRunning;
             }
-
-            if (isRunning)
+            else
             {
-                // Screen saver is ON.
-                return true;
+                return false; // could not detect screen saver status
             }
-
-            // Screen saver is OFF.
-            return false;
         }
     }
 }

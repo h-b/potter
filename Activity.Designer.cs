@@ -43,10 +43,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 26);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(12, 50);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(138, 17);
+            this.label1.Size = new System.Drawing.Size(273, 32);
             this.label1.TabIndex = 0;
             this.label1.Text = "Your current activity:";
             // 
@@ -55,20 +55,21 @@
             this.comboBoxActivity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxActivity.FormattingEnabled = true;
-            this.comboBoxActivity.Location = new System.Drawing.Point(146, 24);
-            this.comboBoxActivity.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxActivity.Location = new System.Drawing.Point(292, 46);
+            this.comboBoxActivity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBoxActivity.Name = "comboBoxActivity";
-            this.comboBoxActivity.Size = new System.Drawing.Size(302, 24);
+            this.comboBoxActivity.Size = new System.Drawing.Size(600, 39);
             this.comboBoxActivity.TabIndex = 0;
+            this.comboBoxActivity.Validating += new System.ComponentModel.CancelEventHandler(this.comboBoxActivity_Validating);
             // 
             // buttonAskDefault
             // 
             this.buttonAskDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAskDefault.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonAskDefault.Location = new System.Drawing.Point(289, 190);
-            this.buttonAskDefault.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonAskDefault.Location = new System.Drawing.Point(578, 368);
+            this.buttonAskDefault.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonAskDefault.Name = "buttonAskDefault";
-            this.buttonAskDefault.Size = new System.Drawing.Size(270, 29);
+            this.buttonAskDefault.Size = new System.Drawing.Size(540, 56);
             this.buttonAskDefault.TabIndex = 6;
             this.buttonAskDefault.UseVisualStyleBackColor = true;
             // 
@@ -76,19 +77,19 @@
             // 
             this.buttonAskOptional.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonAskOptional.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonAskOptional.Location = new System.Drawing.Point(9, 190);
-            this.buttonAskOptional.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonAskOptional.Location = new System.Drawing.Point(18, 368);
+            this.buttonAskOptional.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonAskOptional.Name = "buttonAskOptional";
-            this.buttonAskOptional.Size = new System.Drawing.Size(270, 29);
+            this.buttonAskOptional.Size = new System.Drawing.Size(540, 56);
             this.buttonAskOptional.TabIndex = 5;
             this.buttonAskOptional.UseVisualStyleBackColor = true;
             // 
             // buttonConfiguration
             // 
-            this.buttonConfiguration.Location = new System.Drawing.Point(6, 110);
-            this.buttonConfiguration.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonConfiguration.Location = new System.Drawing.Point(12, 213);
+            this.buttonConfiguration.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonConfiguration.Name = "buttonConfiguration";
-            this.buttonConfiguration.Size = new System.Drawing.Size(144, 27);
+            this.buttonConfiguration.Size = new System.Drawing.Size(288, 52);
             this.buttonConfiguration.TabIndex = 4;
             this.buttonConfiguration.Text = "Settings...";
             this.buttonConfiguration.UseVisualStyleBackColor = true;
@@ -98,10 +99,10 @@
             // 
             this.buttonRemoveActivity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRemoveActivity.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonRemoveActivity.Location = new System.Drawing.Point(450, 22);
-            this.buttonRemoveActivity.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonRemoveActivity.Location = new System.Drawing.Point(900, 43);
+            this.buttonRemoveActivity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonRemoveActivity.Name = "buttonRemoveActivity";
-            this.buttonRemoveActivity.Size = new System.Drawing.Size(110, 26);
+            this.buttonRemoveActivity.Size = new System.Drawing.Size(220, 50);
             this.buttonRemoveActivity.TabIndex = 1;
             this.buttonRemoveActivity.Text = "Remove";
             this.buttonRemoveActivity.UseVisualStyleBackColor = true;
@@ -110,10 +111,10 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(74, 57);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(148, 110);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 17);
+            this.label2.Size = new System.Drawing.Size(138, 32);
             this.label2.TabIndex = 5;
             this.label2.Text = "Category:";
             // 
@@ -122,20 +123,21 @@
             this.comboBoxCategory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxCategory.FormattingEnabled = true;
-            this.comboBoxCategory.Location = new System.Drawing.Point(146, 56);
-            this.comboBoxCategory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxCategory.Location = new System.Drawing.Point(292, 108);
+            this.comboBoxCategory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBoxCategory.Name = "comboBoxCategory";
-            this.comboBoxCategory.Size = new System.Drawing.Size(302, 24);
+            this.comboBoxCategory.Size = new System.Drawing.Size(600, 39);
             this.comboBoxCategory.TabIndex = 2;
+            this.comboBoxCategory.Validating += new System.ComponentModel.CancelEventHandler(this.comboBoxCategory_Validating);
             // 
             // buttonRemoveCategory
             // 
             this.buttonRemoveCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRemoveCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonRemoveCategory.Location = new System.Drawing.Point(450, 53);
-            this.buttonRemoveCategory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonRemoveCategory.Location = new System.Drawing.Point(900, 103);
+            this.buttonRemoveCategory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonRemoveCategory.Name = "buttonRemoveCategory";
-            this.buttonRemoveCategory.Size = new System.Drawing.Size(110, 26);
+            this.buttonRemoveCategory.Size = new System.Drawing.Size(220, 50);
             this.buttonRemoveCategory.TabIndex = 3;
             this.buttonRemoveCategory.Text = "Remove";
             this.buttonRemoveCategory.UseVisualStyleBackColor = true;
@@ -144,10 +146,10 @@
             // Activity
             // 
             this.AcceptButton = this.buttonAskDefault;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonAskDefault;
-            this.ClientSize = new System.Drawing.Size(565, 236);
+            this.ClientSize = new System.Drawing.Size(1130, 457);
             this.ControlBox = false;
             this.Controls.Add(this.buttonRemoveCategory);
             this.Controls.Add(this.comboBoxCategory);
@@ -160,7 +162,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Activity";
             this.Opacity = 0.9D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
