@@ -49,7 +49,7 @@ namespace potter
                         }
                         else
                         {
-                            InitiateToQueryUserActivity(false, true);
+                            InitiateToQueryUserActivity(false, true, true);
                         }
 
                         wasScreenSaverRunning = isScreenSaverRunning;
@@ -68,7 +68,7 @@ namespace potter
                         }
                         else
                         {
-                            InitiateToQueryUserActivity(false, true);
+                            InitiateToQueryUserActivity(false, true, true);
                         }
 
                         wasWorkstationLocked = isWorkstationLocked;
@@ -77,7 +77,7 @@ namespace potter
                     if (Program.s_event.WaitOne(1))
                     {
                         Logger.Append("Received message from other potter instance to open the dialog.");
-                        InitiateToQueryUserActivity(false, true);
+                        InitiateToQueryUserActivity(false, true, false);
                     }
 
                     watchdog.Start();

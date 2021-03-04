@@ -45,7 +45,7 @@ namespace potter
             notifyIcon.DoubleClick += new EventHandler(delegate (object sender, EventArgs e)
             {
                 Logger.Append("TrayIcon.DoubleClick");
-                activityHandler.InitiateToQueryUserActivity(false, true);
+                activityHandler.InitiateToQueryUserActivity(false, true, false);
             });
             notifyIcon.Visible = true;
         }
@@ -57,12 +57,12 @@ namespace potter
                 new ToolStripMenuItem("Show potter time tracker", null, new EventHandler(delegate (object sender, EventArgs e)
                 {
                     Logger.Append("TrayIcon.Show");
-                    activityHandler.InitiateToQueryUserActivity(false, true);
+                    activityHandler.InitiateToQueryUserActivity(false, true, false);
                 })),
                 new ToolStripMenuItem("Settings...", null, new EventHandler(delegate (object sender, EventArgs e)
                 {
                     Logger.Append("TrayIcon.Settings");
-                    activityHandler.InitiateToQueryUserActivity(true, false);
+                    activityHandler.InitiateToQueryUserActivity(true, false, false);
                 })),
                 new ToolStripMenuItem("About...", null, new EventHandler(delegate (object sender, EventArgs e)
                 {

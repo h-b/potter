@@ -15,17 +15,23 @@ namespace potter
         bool showConfiguration = false;
         bool startNow = false;
         Timesheet timesheet;
-        public delegate void DelegateInitiateToQueryUserActivity(bool showConfiguration, bool startNow);
+        DateTime lastSystemUnlockTime = DateTime.Now;
+        public delegate void DelegateInitiateToQueryUserActivity(bool showConfiguration, bool startNow, bool systemUnlock);
 
         public ActivityHandler(Timesheet timesheet)
         {
             this.timesheet = timesheet;
             queryUserActivity.Elapsed += QueryUserActivity;
-            InitiateToQueryUserActivity(false, true);
+            InitiateToQueryUserActivity(false, true, false);
         }
 
-        internal void InitiateToQueryUserActivity(bool showConfiguration, bool startNow)
+        internal void InitiateToQueryUserActivity(bool showConfiguration, bool startNow, bool systemUnlock)
         {
+            if (systemUnlock)
+            {
+                lastSystemUnlockTime = DateTime.Now;
+            }
+
             this.showConfiguration = showConfiguration;
             this.startNow = startNow;
             queryUserActivity.Interval = 1;
@@ -59,7 +65,15 @@ namespace potter
 
                     if (startNow)
                     {
-                        activityDescription = "started when the dialog opened";
+                        if (lastSystemUnlockTime > startTime)
+                        {
+                            startTime = lastSystemUnlockTime;
+                            activityDescription = "started when the system was unlocked";
+                        }
+                        else
+                        {
+                            activityDescription = "started when the dialog opened";
+                        }
                     }
                     else
                     {
