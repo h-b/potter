@@ -86,8 +86,10 @@ namespace potter
 
                     timesheet.AddActivity(startTime, activity.Current, activity.Category);
 
-                    queryUserActivity.Interval = 60 * 1000 * (dialogResult == DialogResult.OK ? Configuration.DefaultTimeInterval : Configuration.OptionalTimeInterval);
+                    TimeSpan selectedInterval = dialogResult == DialogResult.OK ? activity.DefaultTime : activity.OptionalTime;
+                    queryUserActivity.Interval = selectedInterval.TotalMilliseconds;
                     queryUserActivity.Start();
+                    Logger.Append("Set timer to open dialog in " + selectedInterval.Minutes.ToString() + " minutes");
                 }
                 finally
                 {

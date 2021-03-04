@@ -17,12 +17,13 @@ namespace potter
 
         public PotterApplicationContext()
         {
+            timesheet = new Timesheet();
             Application.ApplicationExit += new EventHandler(delegate (object sender, EventArgs e)
             {
                 notifyIcon.Visible = false;
                 Logger.Append("PotterApplicationContext.ApplicationExit");
+                timesheet.Exit();
             });
-            timesheet = new Timesheet();
             activityHandler = new ActivityHandler(timesheet);
             watchdogHandler = new WatchdogHandler(timesheet, activityHandler.InitiateToQueryUserActivity);
             InitializeTrayIcon();

@@ -56,7 +56,7 @@
             "cmd /C echo ^| $FROM_DATE ^| $FROM_TIME ^| $TO_DATE ^| $TO_TIME ^| $CATEGORY ^| $" +
                 "ACTIVITY ^| >>timesheet.md"});
             this.comboBoxExecuteCommand.Location = new System.Drawing.Point(18, 45);
-            this.comboBoxExecuteCommand.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBoxExecuteCommand.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxExecuteCommand.Name = "comboBoxExecuteCommand";
             this.comboBoxExecuteCommand.Size = new System.Drawing.Size(988, 39);
             this.comboBoxExecuteCommand.TabIndex = 0;
@@ -97,7 +97,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxInfo.Location = new System.Drawing.Point(18, 501);
-            this.textBoxInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxInfo.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxInfo.Multiline = true;
             this.textBoxInfo.Name = "textBoxInfo";
             this.textBoxInfo.ReadOnly = true;
@@ -110,7 +110,7 @@
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.Location = new System.Drawing.Point(844, 750);
-            this.buttonOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonOK.Margin = new System.Windows.Forms.Padding(4);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(196, 50);
             this.buttonOK.TabIndex = 3;
@@ -124,9 +124,9 @@
             this.label4.Location = new System.Drawing.Point(166, 254);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(86, 32);
+            this.label4.Size = new System.Drawing.Size(115, 32);
             this.label4.TabIndex = 8;
-            this.label4.Text = "hours";
+            this.label4.Text = "minutes";
             // 
             // label5
             // 
@@ -143,7 +143,7 @@
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new System.Drawing.Point(642, 750);
-            this.buttonCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonCancel.Margin = new System.Windows.Forms.Padding(4);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(196, 50);
             this.buttonCancel.TabIndex = 4;
@@ -154,7 +154,7 @@
             // textBoxDefaultTimeInverval
             // 
             this.textBoxDefaultTimeInverval.Location = new System.Drawing.Point(18, 141);
-            this.textBoxDefaultTimeInverval.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxDefaultTimeInverval.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxDefaultTimeInverval.Name = "textBoxDefaultTimeInverval";
             this.textBoxDefaultTimeInverval.Size = new System.Drawing.Size(142, 38);
             this.textBoxDefaultTimeInverval.TabIndex = 1;
@@ -162,7 +162,7 @@
             // textBoxOptionalTimeInterval
             // 
             this.textBoxOptionalTimeInterval.Location = new System.Drawing.Point(18, 254);
-            this.textBoxOptionalTimeInterval.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxOptionalTimeInterval.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxOptionalTimeInterval.Name = "textBoxOptionalTimeInterval";
             this.textBoxOptionalTimeInterval.Size = new System.Drawing.Size(142, 38);
             this.textBoxOptionalTimeInterval.TabIndex = 2;
@@ -170,7 +170,7 @@
             // textBoxRoundTimes
             // 
             this.textBoxRoundTimes.Location = new System.Drawing.Point(18, 355);
-            this.textBoxRoundTimes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxRoundTimes.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxRoundTimes.Name = "textBoxRoundTimes";
             this.textBoxRoundTimes.Size = new System.Drawing.Size(120, 38);
             this.textBoxRoundTimes.TabIndex = 9;
@@ -199,7 +199,7 @@
             // 
             this.checkBoxStartOnLogin.AutoSize = true;
             this.checkBoxStartOnLogin.Location = new System.Drawing.Point(18, 432);
-            this.checkBoxStartOnLogin.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.checkBoxStartOnLogin.Margin = new System.Windows.Forms.Padding(6);
             this.checkBoxStartOnLogin.Name = "checkBoxStartOnLogin";
             this.checkBoxStartOnLogin.Size = new System.Drawing.Size(34, 33);
             this.checkBoxStartOnLogin.TabIndex = 12;
@@ -230,7 +230,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxExecuteCommand);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Configuration";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Potter configuration";

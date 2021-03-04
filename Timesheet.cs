@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace potter
 {
-    class Timesheet : IDisposable
+    class Timesheet
     {
         private string previousActivity = null;
         private string previousCategory = null;
@@ -17,7 +17,7 @@ namespace potter
         private DateTime previousStartTime = DateTime.MinValue;
         internal static string SystemCategory = "(system)";
 
-        void IDisposable.Dispose()
+        internal void Exit()
         {
             DateTime now = DateTime.Now;
             Update(previousStartTime, now, previousActivity, previousCategory);
@@ -26,8 +26,14 @@ namespace potter
 
         public void AddActivity(DateTime startTime, string activity, string category)
         {
-            if (activity != previousActivity || category != previousCategory)
+            if (   (activity != previousActivity || category != previousCategory)
+                && (category != SystemCategory || startTime - previousStartTime >= TimeSpan.FromMinutes(1)))
             {
+                if (category==SystemCategory)
+                {
+                    Logger.Append(string.Format("Time between {0} and {1} of system activity is {2}", previousStartTime, startTime, startTime - previousStartTime));
+                }
+
                 if (!string.IsNullOrWhiteSpace(previousActivity) && previousStartTime != DateTime.MinValue)
                 {
                     Update(previousStartTime, startTime, previousActivity, string.IsNullOrWhiteSpace(previousCategory) ? "": previousCategory);

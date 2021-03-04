@@ -22,7 +22,7 @@ namespace potter
 
             comboBoxExecuteCommand.Text = (ConfigurationManager.AppSettings[comboBoxExecuteCommand.Name] ?? comboBoxExecuteCommand.Items[0]).ToString();
             textBoxDefaultTimeInverval.Text = ConfigurationManager.AppSettings[textBoxDefaultTimeInverval.Name] ?? "";
-            textBoxOptionalTimeInterval.Text = (Int32.Parse(ConfigurationManager.AppSettings[textBoxOptionalTimeInterval.Name]) / 60).ToString() ?? "";
+            textBoxOptionalTimeInterval.Text = ConfigurationManager.AppSettings[textBoxOptionalTimeInterval.Name] ?? "";
             textBoxRoundTimes.Text = ConfigurationManager.AppSettings[textBoxRoundTimes.Name] ?? "";
         }
 
@@ -42,7 +42,7 @@ namespace potter
             config.AppSettings.Settings.Remove(textBoxRoundTimes.Name);
             config.AppSettings.Settings.Add(comboBoxExecuteCommand.Name, comboBoxExecuteCommand.Text);
             config.AppSettings.Settings.Add(textBoxDefaultTimeInverval.Name, textBoxDefaultTimeInverval.Text);
-            config.AppSettings.Settings.Add(textBoxOptionalTimeInterval.Name, (60 * Int32.Parse(textBoxOptionalTimeInterval.Text)).ToString());
+            config.AppSettings.Settings.Add(textBoxOptionalTimeInterval.Name, textBoxOptionalTimeInterval.Text);
             config.AppSettings.Settings.Add(textBoxRoundTimes.Name, textBoxRoundTimes.Text);
             try
             {

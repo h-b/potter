@@ -15,14 +15,22 @@ namespace potter
     public partial class Activity : Form
     {
         bool showConfiguration;
+        object updatingButtonTexts = new object();
+        System.Timers.Timer updateButtonTexts = new System.Timers.Timer();
+
+        internal TimeSpan DefaultTime { get; private set; }
+        internal TimeSpan OptionalTime { get; private set; }
 
         public Activity(string previousActivity, string previousCategory, bool showConfiguration)
         {
             this.showConfiguration = showConfiguration;
+            InitializeTimeSpans(DateTime.Now);
             InitializeComponent();
-            UpdateButtonTexts();
             FillComboboxActivity(previousActivity);
             FillComboboxCategory(previousCategory);
+
+            updateButtonTexts.Elapsed += UpdateButtonTexts;
+            updateButtonTexts.Interval = 1000;
         }
 
         private void FillComboboxActivity(string currentActivity)
@@ -88,14 +96,78 @@ namespace potter
             TopMost = false;
             Configuration dlgConfiguration = new Configuration();
             dlgConfiguration.ShowDialog();
-            UpdateButtonTexts();
+            updateButtonTexts.Stop();
+            updateButtonTexts.Start();
             TopMost = true;
         }
 
-        private void UpdateButtonTexts()
+        private void UpdateButtonTexts(object sender, EventArgs e)
         {
-            buttonAskDefault.Text = string.Format(String.Format("Ask again in {0} minutes", Configuration.DefaultTimeInterval));
-            buttonAskOptional.Text = string.Format(String.Format("Ask again in {0} hours", Configuration.OptionalTimeInterval / 60));
+            Invoke(new Action(() =>
+            {
+                if (Monitor.TryEnter(updatingButtonTexts))
+                {
+                    try
+                    {
+                        updateButtonTexts.Stop();
+                        DateTime now = DateTime.Now;
+                        InitializeTimeSpans(now);
+
+                        buttonAskDefault.Text = string.Format(String.Format("Ask again at {0}", (now + DefaultTime).ToString(Timesheet.timeFormat)));
+                        buttonAskOptional.Text = string.Format(String.Format("Ask again at {0}", (now + OptionalTime).ToString(Timesheet.timeFormat)));
+                        updateButtonTexts.Start();
+                    }
+                    finally
+                    {
+                        Monitor.Exit(updatingButtonTexts);
+                    }
+                }
+            }));
+        }
+
+        private void InitializeTimeSpans(DateTime now)
+        {
+            int currentMinute = now.Minute;
+            DefaultTime = calculateOptimumInterval(Configuration.DefaultTimeInterval, currentMinute, Configuration.DefaultTimeInterval);
+            OptionalTime = calculateOptimumInterval(Configuration.OptionalTimeInterval, currentMinute, Configuration.DefaultTimeInterval);
+        }
+
+        private static TimeSpan calculateOptimumInterval(int selectedInterval, int minute, int defaultTimeInterval)
+        {
+            int optimumInterval = selectedInterval;
+            int score = 0;
+
+            for (int testInterval = selectedInterval - defaultTimeInterval / 2; testInterval <= selectedInterval + defaultTimeInterval / 2; ++testInterval)
+            {
+                int m = (minute + testInterval) % 60;
+                if (score < 5 && m == 0)
+                {
+                    optimumInterval = testInterval;
+                    score = 5;
+                }
+                else if (score < 4 && m == 30)
+                {
+                    optimumInterval = testInterval;
+                    score = 4;
+                }
+                else if (score < 3 && (m == 15 || m == 45))
+                {
+                    optimumInterval = testInterval;
+                    score = 3;
+                }
+                else if (score < 2 && (m == 10 || m == 20 || m == 40 || m == 50))
+                {
+                    optimumInterval = testInterval;
+                    score = 2;
+                }
+                else if (score < 1 && (m == 5 || m == 25 || m == 35 || m == 55))
+                {
+                    optimumInterval = testInterval;
+                    score = 1;
+                }
+            }
+
+            return TimeSpan.FromMinutes(optimumInterval);
         }
 
         internal string Current
@@ -125,11 +197,18 @@ namespace potter
                     TopMost = true;
                     e.Cancel = true;
                 }
+                else
+                {
+                    updateButtonTexts.Stop();
+                }
             }));
         }
 
         private void Activity_Load(object sender, EventArgs e)
         {
+            UpdateButtonTexts(new object(), new EventArgs());
+            updateButtonTexts.Start();
+
             if (showConfiguration)
             {
                 ClickConfiguationButton();
